@@ -1,5 +1,4 @@
 import {ButtonHTMLAttributes, DetailedHTMLProps} from 'react';
-import {FcGoogle} from 'react-icons/fc';
 import {motion, MotionProps} from 'motion/react';
 
 type Props = DetailedHTMLProps<
@@ -11,15 +10,6 @@ type Props = DetailedHTMLProps<
     icon?: any;
     loading?: boolean;
     variant?: 'primary' | 'secondary';
-  };
-
-type AddToCartButtonProps = DetailedHTMLProps<
-  ButtonHTMLAttributes<HTMLButtonElement>,
-  HTMLButtonElement
-> &
-  MotionProps & {
-    price: number;
-    loading?: boolean;
   };
 
 const btnWhileTap = {
@@ -38,8 +28,12 @@ export function Button({
     case 'primary':
       return (
         <motion.button
+          style={{
+            // @ts-expect-error
+            '--rad': '20px',
+          }}
           whileTap={btnWhileTap}
-          className={`bg-black hover:opacity-90 transition-all text-white py-2 md:py-3 rounded-lg w-full font-bold text-sm md:text-base focus:outline-2 focus:outline-gray-300 ${className}`}
+          className={`squircle bg-foreground hover:opacity-90 transition-opacity text-background py-2.5 rounded-lg w-full font-bold text-sm md:text-base focus:outline-2 focus:outline-gray-300 ${className}`}
           {...props}
         >
           {loading ? (
@@ -56,7 +50,7 @@ export function Button({
       return (
         <motion.button
           whileTap={btnWhileTap}
-          className={`bg-[#F7F7FC] hover:opacity-90 transition-all text-black py-2 md:py-3 rounded-lg w-full font-bold text-sm md:text-base focus:outline-2 focus:outline-black ${className}`}
+          className={`bg-[#F7F7FC] hover:opacity-90 transition-opacity text-foreground py-2.5 rounded-lg w-full font-bold text-sm md:text-base focus:outline-2 focus:outline-foreground ${className}`}
           {...props}
         >
           {loading ? (
@@ -75,7 +69,7 @@ export function Button({
 function LoadingSpinner() {
   return (
     <div className="flex items-center justify-center">
-      <div className="w-[1.5em] h-[1.5em] border-[3.5px] border-white border-t-primary rounded-full animate-spin"></div>
+      <div className="w-[1.5em] h-[1.5em] border-[3.5px] border-white border-t-black rounded-full animate-spin"></div>
     </div>
   );
 }

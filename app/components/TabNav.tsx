@@ -38,7 +38,7 @@ export default function TabNav({tabs, activeTab, setActiveTab}: TabNavProps) {
   }, [activeTab, activeTabElementRef, containerRef]);
 
   return (
-    <div className="relative flex flex-col items-center w-full mx-auto bg-gray-200 dark:bg-gray-800 rounded-full py-1">
+    <div className="relative flex flex-col items-center w-full mx-auto bg-gray-200 rounded-full py-1">
       <ul className="relative flex w-full justify-center gap-2 p-1.5 rounded-full">
         {tabs.map((tab) => (
           <li key={tab.name} className="w-full">

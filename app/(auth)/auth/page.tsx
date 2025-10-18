@@ -2,6 +2,7 @@
 import TabNav from '@/app/components/TabNav';
 import {Button} from '@/app/components/ui/Button';
 import {FormInput} from '@/app/components/ui/FormInput';
+import {AnimatePresence, motion} from 'motion/react';
 import {useState} from 'react';
 import {FaChartSimple} from 'react-icons/fa6';
 import {FiLock} from 'react-icons/fi';
@@ -18,8 +19,25 @@ export default function AuthPage() {
           Tracka
         </h1>
         <p className="text-center mb-5">
-          {activeTab === 'Sign In' && 'Welcome back! Sign in to your account.'}
-          {activeTab === 'Sign Up' && 'Create an account to get started'}
+          {activeTab === 'Sign In' && (
+            <motion.span
+              initial={{opacity: 0}}
+              animate={{opacity: 1}}
+              exit={{opacity: 0}}
+            >
+              Welcome back! Sign in to your account
+            </motion.span>
+          )}
+
+          {activeTab === 'Sign Up' && (
+            <motion.span
+              initial={{opacity: 0}}
+              animate={{opacity: 1}}
+              exit={{opacity: 0}}
+            >
+              Create an account to get started
+            </motion.span>
+          )}
         </p>
         <section className="bg-background px-4 py-6 border-[0.5px] border-gray-300 rounded-lg ">
           <TabNav
