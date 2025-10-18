@@ -1,15 +1,57 @@
 'use client';
 import TabNav from '@/app/components/TabNav';
+import {Button} from '@/app/components/ui/Button';
+import {FormInput} from '@/app/components/ui/FormInput';
 import {useState} from 'react';
+import {FaChartSimple} from 'react-icons/fa6';
+import {FiLock} from 'react-icons/fi';
+import {HiOutlineMail} from 'react-icons/hi';
 
 export default function AuthPage() {
   const [activeTab, setActiveTab] = useState(TABS[0].name);
 
   return (
-    <div className="">
-      <section className="mt-[20vh] bg-background p-4 border-[0.5px] border-foreground rounded-lg w-[min(90%,450px)] mx-auto">
-        <TabNav tabs={TABS} activeTab={activeTab} setActiveTab={setActiveTab} />
-      </section>
+    <div className="font-sans">
+      <div className="mt-[20vh] w-[min(90%,450px)] mx-auto">
+        <h1 className="flex justify-center items-center mb-3 gap-2 text-2xl">
+          <FaChartSimple />
+          Tracka
+        </h1>
+        <p className="text-center mb-5">
+          {activeTab === 'Sign In' && 'Welcome back! Sign in to your account.'}
+          {activeTab === 'Sign Up' && 'Create an account to get started'}
+        </p>
+        <section className="bg-background px-4 py-6 border-[0.5px] border-gray-300 rounded-lg ">
+          <TabNav
+            tabs={TABS}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
+
+          {/* Sign in form */}
+          <form className="mt-4">
+            <div className="mb-4">
+              <FormInput
+                label="Email"
+                type="email"
+                placeholder="Enter your email"
+                leftIcon={<HiOutlineMail size={20} />}
+              />
+            </div>
+            <div className="mb-4">
+              <FormInput
+                label="Password"
+                type="password"
+                placeholder="Enter your password"
+                leftIcon={<FiLock size={20} />}
+              />
+            </div>
+            <div className="mt-6">
+              <Button label="Submit" />
+            </div>
+          </form>
+        </section>
+      </div>
     </div>
   );
 }

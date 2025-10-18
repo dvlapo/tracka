@@ -1,7 +1,5 @@
 'use client';
-// reference: https://emilkowal.ski/ui/the-magic-of-clip-path
-
-import {Dispatch, SetStateAction, useEffect, useRef, useState} from 'react';
+import {Dispatch, SetStateAction, useEffect, useRef} from 'react';
 
 type Tab = {
   name: string;
@@ -13,6 +11,7 @@ type TabNavProps = {
   setActiveTab: Dispatch<SetStateAction<string>>;
   tabs: Tab[];
 };
+// reference: https://emilkowal.ski/ui/the-magic-of-clip-path
 
 export default function TabNav({tabs, activeTab, setActiveTab}: TabNavProps) {
   const containerRef = useRef<HTMLDivElement>(null);
