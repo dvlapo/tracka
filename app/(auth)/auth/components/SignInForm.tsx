@@ -63,6 +63,13 @@ export default function SignInForm() {
           }
           {...register('password')}
         />
+        <button
+          className="bg-transparent border-none outline-none ml-auto block mt-2 text-sm"
+          type="button"
+          onClick={() => console.log('Do nothing 😏')}
+        >
+          <span className="">Forgot password?</span>
+        </button>
       </div>
 
       <div className="mt-6">
