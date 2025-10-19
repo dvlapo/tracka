@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {Dispatch, SetStateAction, useState} from 'react';
 import {Button} from '@/app/components/ui/Button';
 import {FormInput} from '@/app/components/ui/FormInput';
 import {FiLock} from 'react-icons/fi';
@@ -8,14 +8,23 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {signUpSchema} from '@/validations/auth';
 import {RiEyeCloseLine, RiEyeLine} from 'react-icons/ri';
 import {MdOutlinePerson} from 'react-icons/md';
+import {useAuth} from '@/app/hooks/auth/useAuth';
+import {toast} from 'sonner';
 
-export default function SignUpForm() {
+export default function SignUpForm({
+  setActiveTab,
+}: {
+  setActiveTab: Dispatch<SetStateAction<string>>;
+}) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const {signUpMutation} = useAuth();
+
   const {
     register,
     formState: {errors},
     handleSubmit,
+    reset: resetForm,
   } = useForm({
     defaultValues: {
       name: '',
@@ -26,14 +35,23 @@ export default function SignUpForm() {
     mode: 'onTouched',
   });
 
+  const onSubmit = (data: {name: string; email: string; password: string}) => {
+    signUpMutation.mutate(data, {
+      onSuccess() {
+        toast.success(
+          'Sign up successful! You can sign in to your account to proceed'
+        );
+        setActiveTab('Sign In');
+        resetForm();
+      },
+      onError(error) {
+        toast.error(error.message);
+      },
+    });
+  };
+
   return (
-    <form
-      onSubmit={handleSubmit((data) => {
-        // handle inputs
-        console.log(data);
-      })}
-      className="mt-4"
-    >
+    <form onSubmit={handleSubmit(onSubmit)} className="mt-4">
       <div className="mb-4">
         <FormInput
           label="Name"
@@ -102,7 +120,7 @@ export default function SignUpForm() {
       </div>
 
       <div className="mt-6">
-        <Button label="Create Account" />
+        <Button label="Create Account" loading={signUpMutation.isPending} />
       </div>
     </form>
   );

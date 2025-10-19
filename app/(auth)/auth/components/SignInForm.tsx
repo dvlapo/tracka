@@ -7,9 +7,15 @@ import {useForm} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {signInSchema} from '@/validations/auth';
 import {RiEyeCloseLine, RiEyeLine} from 'react-icons/ri';
+import {useAuth} from '@/app/hooks/auth/useAuth';
+import {toast} from 'sonner';
+import {useRouter} from 'next/navigation';
 
 export default function SignInForm() {
   const [showPassword, setShowPassword] = useState(false);
+  const {signInMutation} = useAuth();
+  const router = useRouter();
+
   const {
     register,
     formState: {errors},
@@ -23,14 +29,19 @@ export default function SignInForm() {
     mode: 'onTouched',
   });
 
+  const onSubmit = (data: {email: string; password: string}) => {
+    signInMutation.mutate(data, {
+      onSuccess() {
+        router.replace('/dashboard');
+      },
+      onError(error) {
+        toast.error(error.message);
+      },
+    });
+  };
+
   return (
-    <form
-      onSubmit={handleSubmit((data) => {
-        // handle inputs
-        console.log(data);
-      })}
-      className="mt-4"
-    >
+    <form onSubmit={handleSubmit(onSubmit)} className="mt-4">
       <div className="mb-4">
         <FormInput
           label="Email"
@@ -73,7 +84,7 @@ export default function SignInForm() {
       </div>
 
       <div className="mt-6">
-        <Button label="Sign In" />
+        <Button label="Sign In" loading={signInMutation.isPending} />
       </div>
     </form>
   );
