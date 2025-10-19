@@ -1,75 +1,47 @@
 'use client';
 import TabNav from '@/app/components/TabNav';
-import {Button} from '@/app/components/ui/Button';
-import {FormInput} from '@/app/components/ui/FormInput';
-import {AnimatePresence, motion} from 'motion/react';
+import {motion} from 'motion/react';
 import {useState} from 'react';
 import {FaChartSimple} from 'react-icons/fa6';
-import {FiLock} from 'react-icons/fi';
-import {HiOutlineMail} from 'react-icons/hi';
+import SignInForm from './components/SignInForm';
+import SignUpForm from './components/SignUpForm';
 
 export default function AuthPage() {
   const [activeTab, setActiveTab] = useState(TABS[0].name);
 
   return (
-    <div className="font-sans">
-      <div className="mt-[20vh] w-[min(90%,450px)] mx-auto">
-        <h1 className="flex justify-center items-center mb-3 gap-2 text-2xl">
-          <FaChartSimple />
-          Tracka
-        </h1>
-        <p className="text-center mb-5">
-          {activeTab === 'Sign In' && (
-            <motion.span
-              initial={{opacity: 0}}
-              animate={{opacity: 1}}
-              exit={{opacity: 0}}
-            >
-              Welcome back! Sign in to your account
-            </motion.span>
-          )}
+    <div className="my-[15vh] w-[min(90%,450px)] mx-auto">
+      <h1 className="flex justify-center items-center mb-3 gap-2 text-2xl">
+        <FaChartSimple />
+        Tracka
+      </h1>
+      <p className="text-center mb-5 text-gray-500">
+        {activeTab === 'Sign In' && (
+          <motion.span
+            initial={{opacity: 0}}
+            animate={{opacity: 1}}
+            exit={{opacity: 0}}
+          >
+            Welcome back! Sign in to your account
+          </motion.span>
+        )}
 
-          {activeTab === 'Sign Up' && (
-            <motion.span
-              initial={{opacity: 0}}
-              animate={{opacity: 1}}
-              exit={{opacity: 0}}
-            >
-              Create an account to get started
-            </motion.span>
-          )}
-        </p>
-        <section className="bg-background px-4 py-6 border-[0.5px] border-gray-300 rounded-lg ">
-          <TabNav
-            tabs={TABS}
-            activeTab={activeTab}
-            setActiveTab={setActiveTab}
-          />
+        {activeTab === 'Sign Up' && (
+          <motion.span
+            initial={{opacity: 0}}
+            animate={{opacity: 1}}
+            exit={{opacity: 0}}
+          >
+            Create an account to get started
+          </motion.span>
+        )}
+      </p>
+      <section className="bg-background px-4 py-6 border-[0.5px] border-gray-300 rounded-lg ">
+        <TabNav tabs={TABS} activeTab={activeTab} setActiveTab={setActiveTab} />
 
-          {/* Sign in form */}
-          <form className="mt-4">
-            <div className="mb-4">
-              <FormInput
-                label="Email"
-                type="email"
-                placeholder="Enter your email"
-                leftIcon={<HiOutlineMail size={20} />}
-              />
-            </div>
-            <div className="mb-4">
-              <FormInput
-                label="Password"
-                type="password"
-                placeholder="Enter your password"
-                leftIcon={<FiLock size={20} />}
-              />
-            </div>
-            <div className="mt-6">
-              <Button label="Submit" />
-            </div>
-          </form>
-        </section>
-      </div>
+        {activeTab === 'Sign In' && <SignInForm />}
+        {activeTab === 'Sign Up' && <SignUpForm />}
+      </section>
     </div>
   );
 }

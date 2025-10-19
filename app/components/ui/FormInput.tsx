@@ -20,7 +20,10 @@ export function FormInput({
 }: Props) {
   return (
     <div className="text-xs md:text-sm">
-      <label htmlFor={props.id} className="font-semibold text-foreground">
+      <label
+        htmlFor={props.id}
+        className="font-semibold text-foreground block mb-1"
+      >
         {label}
       </label>
       <div
@@ -30,7 +33,7 @@ export function FormInput({
         }}
         className={`squircle w-full bg-gray-100 border border-gray-300 rounded-lg px-4 focus-within:outline-solid focus-within:outline-2 focus-within:outline-gray-300 grid gap-2 items-center ${
           rightIcon ? 'grid-cols-[1fr,20px]' : 'grid-cols-1'
-        }`}
+        } ${error ? 'shake' : ''}`}
       >
         <div className="flex gap-2 items-center">
           {leftIcon}
@@ -48,10 +51,10 @@ export function FormInput({
             }}
             {...props}
           />
+          {rightIcon}
         </div>
-        {rightIcon}
       </div>
-      {error && <small className="text-red-500">{error}</small>}
+      {error && <small className="text-red-500 text-xs">{error}</small>}
     </div>
   );
 }
