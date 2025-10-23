@@ -1,7 +1,7 @@
 'use client';
 import {Dispatch, SetStateAction, useEffect, useRef} from 'react';
 
-type Tab = {
+export type Tab = {
   name: string;
   icon?: any;
 };
@@ -38,7 +38,7 @@ export default function TabNav({tabs, activeTab, setActiveTab}: TabNavProps) {
   }, [activeTab, activeTabElementRef, containerRef]);
 
   return (
-    <div className="relative flex flex-col items-center w-full mx-auto bg-gray-200 rounded-full py-1">
+    <div className="relative flex flex-col items-center w-full mx-auto bg-gray-200 dark:bg-[#252424] rounded-full py-1">
       <ul className="relative flex w-full justify-center gap-2 p-1.5 rounded-full">
         {tabs.map((tab) => (
           <li key={tab.name} className="w-full">
@@ -48,9 +48,9 @@ export default function TabNav({tabs, activeTab, setActiveTab}: TabNavProps) {
               onClick={() => {
                 setActiveTab(tab.name);
               }}
-              className="w-full justify-center flex items-center gap-2 rounded-full px-4 text-sm text-foreground"
+              className="w-full justify-center flex items-center gap-2 rounded-full px-4 text-sm text-foreground dark:text-background"
             >
-              {/* {tab.icon} */}
+              {tab.icon}
               {tab.name}
             </button>
           </li>
@@ -59,7 +59,7 @@ export default function TabNav({tabs, activeTab, setActiveTab}: TabNavProps) {
 
       <div
         aria-hidden
-        className="absolute z-10 w-full overflow-hidden transition-[clip-path] duration-[0.25s]"
+        className="absolute z-10 w-full overflow-hidden transition-[clip-path]  duration-[0.25s]"
         ref={containerRef}
       >
         <ul className="relative flex w-full justify-center gap-2 bg-background p-1.5 rounded-full">

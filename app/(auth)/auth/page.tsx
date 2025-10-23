@@ -1,17 +1,12 @@
 'use client';
-import TabNav from '@/app/components/TabNav';
+import TabNav, {Tab} from '@/app/components/TabNav';
 import {motion} from 'motion/react';
 import {useState} from 'react';
 import {FaChartSimple} from 'react-icons/fa6';
 import SignInForm from './components/SignInForm';
 import SignUpForm from './components/SignUpForm';
 
-type Tabs = {
-  name: string;
-  icon?: any;
-};
-
-const TABS: Tabs[] = [
+const TABS: Tab[] = [
   {
     name: 'Sign In',
   },

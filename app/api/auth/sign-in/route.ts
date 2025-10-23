@@ -1,5 +1,8 @@
 import prisma from '@/lib/prisma';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+
+const JWT_SECRET = process.env.JWT_SECRET as string;
 
 export async function POST(req: Request) {
   try {
@@ -25,9 +28,12 @@ export async function POST(req: Request) {
 
     // ✅ Successful login — exclude password from response
     const {password: _, ...userData} = user;
+    const token = jwt.sign({sub: user.id, email}, JWT_SECRET, {
+      expiresIn: '1h',
+    });
 
     return Response.json(
-      {message: 'Sign-in successful', data: {user: userData}},
+      {message: 'Sign-in successful', data: {user: userData, token}},
       {status: 200}
     );
   } catch (error) {

@@ -9,6 +9,8 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -17,9 +19,15 @@
   --font-body: var(--font-inter);
 }
 
-body {
+html {
   background: var(--background);
   color: var(--foreground);
+  transition: color 400ms;
+}
+
+html.dark {
+  background: var(--foreground);
+  color: var(--background);
 }
 
 @supports (corner-shape: squircle) {
