@@ -33,7 +33,7 @@ export function Button({
             '--rad': '20px',
           }}
           whileTap={btnWhileTap}
-          className={`squircle bg-foreground hover:opacity-90 transition-opacity text-background py-2.5 rounded-lg w-full font-semibold text-sm md:text-base focus:outline-2 focus:outline-gray-300 outline-offset-1 ${className}`}
+          className={`squircle bg-foreground dark:bg-background text-background dark:text-foreground hover:opacity-90 transition-opacity py-2.5 rounded-lg w-full font-semibold text-sm md:text-base focus-visible:outline-2 focus-visible:outline-gray-300 outline-offset-1 ${className}`}
           {...props}
         >
           {loading ? (
