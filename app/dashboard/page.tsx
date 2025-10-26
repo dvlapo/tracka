@@ -6,10 +6,7 @@ import {useState} from 'react';
 import {FiPlus} from 'react-icons/fi';
 import {Button} from '../components/ui/Button';
 import ToggleDarkModeButton from '../components/ToggleDarkModeButton';
-import AnalyticsCard from '../components/ui/AnalyticsCard';
-import {HiOutlineCurrencyDollar} from 'react-icons/hi';
-import {LuCalendarRange} from 'react-icons/lu';
-import {GoGraph} from 'react-icons/go';
+import Analytics from './_components/Analytics';
 
 const TABS: Tab[] = [
   {
@@ -63,24 +60,7 @@ export default function DashboardPage() {
           />
         </section>
 
-        <section className="grid md:grid-cols-3 gap-4">
-          <AnalyticsCard
-            icon={<HiOutlineCurrencyDollar size={20} />}
-            title="Total Expenses"
-            value={25.42}
-          />
-          <AnalyticsCard
-            icon={<LuCalendarRange size={20} />}
-            title="This Month"
-            value={300}
-          />
-          <AnalyticsCard
-            icon={<GoGraph size={20} />}
-            title="Categories"
-            value={6}
-            type="unitless"
-          />
-        </section>
+        {activeTab === 'Dashboard' && <Analytics />}
       </div>
     </main>
   );

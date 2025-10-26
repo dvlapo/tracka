@@ -1,5 +1,12 @@
 import type {Metadata} from 'next';
-import {Geist, Geist_Mono, Inter} from 'next/font/google';
+import {
+  Geist,
+  Geist_Mono,
+  Inter,
+  Rethink_Sans,
+  Be_Vietnam_Pro,
+  Schibsted_Grotesk,
+} from 'next/font/google';
 import './globals.css';
 import Providers from './providers';
 import {Toaster} from 'sonner';
@@ -9,8 +16,24 @@ const geistSans = Geist({
   subsets: ['latin'],
 });
 
+const schibstedGrotesk = Schibsted_Grotesk({
+  variable: '--font-schibsted-grotesk',
+  subsets: ['latin'],
+});
+
+const beVietnamPro = Be_Vietnam_Pro({
+  variable: '--font-be-veitnam-pro',
+  weight: ['400', '500', '600'],
+  subsets: ['latin'],
+});
+
 const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
+  subsets: ['latin'],
+});
+
+const rethinkSans = Rethink_Sans({
+  variable: '--font-rethink-sans',
   subsets: ['latin'],
 });
 
@@ -32,7 +55,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} font-sans antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${inter.variable}
+        ${rethinkSans.variable} ${beVietnamPro.variable} ${schibstedGrotesk.variable}
+        font-sans antialiased`}
       >
         <Toaster
           richColors

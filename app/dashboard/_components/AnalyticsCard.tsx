@@ -26,7 +26,7 @@ export default function AnalyticsCard({
         <p className=" text-xs">{title}</p>
       </div>
 
-      <strong className="text-2xl text-foreground dark:text-background">
+      <strong className="font-bold text-2xl text-foreground dark:text-background">
         {type === 'currency' ? formatCurrency(value) : value}
       </strong>
     </div>

@@ -4,11 +4,16 @@ export default function ToggleDarkModeButton() {
   const {isDarkMode, toggleDarkMode} = useDarkMode();
 
   return (
-    <button onClick={toggleDarkMode} type="button" className="rounded-full ">
+    <button
+      title="Toggle theme"
+      onClick={toggleDarkMode}
+      type="button"
+      className="rounded-full"
+    >
       <span className="relative grid place-content-center w-4 h-4">
         {isDarkMode ? (
           <svg
-            className="w-full h-full absolute top-0 left-0 transition-[transform,_opacity]"
+            className="w-full h-full absolute top-0 left-0 transition-[transform,_opacity] duration-500"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             width="24"

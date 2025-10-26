@@ -48,7 +48,7 @@ export default function TabNav({tabs, activeTab, setActiveTab}: TabNavProps) {
               onClick={() => {
                 setActiveTab(tab.name);
               }}
-              className="w-full justify-center flex items-center gap-1 md:gap-2 rounded-full px-2 md:px-4 text-xs md:text-sm text-foreground dark:text-background"
+              className="w-full justify-center flex items-center gap-1.5 md:gap-2 rounded-full px-2 md:px-4 text-xs md:text-sm text-foreground dark:text-background"
             >
               {tab.icon}
               {tab.name}
@@ -70,7 +70,7 @@ export default function TabNav({tabs, activeTab, setActiveTab}: TabNavProps) {
                 onClick={() => {
                   setActiveTab(tab.name);
                 }}
-                className="w-full justify-center flex items-center gap-1 md:gap-2 rounded-full px-2 md:px-4 text-xs md:text-sm text-foreground"
+                className="w-full justify-center flex items-center gap-1.5 md:gap-2 rounded-full px-2 md:px-4 text-xs md:text-sm text-foreground"
                 tabIndex={-1}
               >
                 {tab.icon}
