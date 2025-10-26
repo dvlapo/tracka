@@ -1,4 +1,4 @@
-import AnalyticsCard from '@/app/dashboard/_components/AnalyticsCard';
+import AnalyticsCard from './AnalyticsCard';
 import {GoGraph} from 'react-icons/go';
 import {HiOutlineCurrencyDollar} from 'react-icons/hi';
 import {LuCalendarRange} from 'react-icons/lu';

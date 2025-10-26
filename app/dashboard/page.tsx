@@ -6,7 +6,8 @@ import {useState} from 'react';
 import {FiPlus} from 'react-icons/fi';
 import {Button} from '../components/ui/Button';
 import ToggleDarkModeButton from '../components/ToggleDarkModeButton';
-import Analytics from './_components/Analytics';
+import Analytics from './_components/dashboard/Analytics';
+import Dashboard from './_components/dashboard/Dashboard';
 
 const TABS: Tab[] = [
   {
@@ -60,7 +61,7 @@ export default function DashboardPage() {
           />
         </section>
 
-        {activeTab === 'Dashboard' && <Analytics />}
+        {activeTab === 'Dashboard' && <Dashboard />}
       </div>
     </main>
   );
