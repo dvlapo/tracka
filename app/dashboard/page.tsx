@@ -8,9 +8,7 @@ import {Button} from '../components/ui/Button';
 import ToggleDarkModeButton from '../components/ToggleDarkModeButton';
 import {BiCoinStack} from 'react-icons/bi';
 import Dashboard from './_components/dashboard/Dashboard';
-import {getCookie} from 'cookies-next';
 import {useUser} from '../hooks/auth/useUser';
-import {useDashboardAnalytics} from '../hooks/analytics/useDashboardAnalytics';
 
 const TABS: Tab[] = [
   {
@@ -29,9 +27,7 @@ const TABS: Tab[] = [
 
 export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState<string>(TABS[0].name);
-  const {getDashboardAnalyticsQuery} = useDashboardAnalytics();
-  const {data: analytics} = getDashboardAnalyticsQuery;
-  // console.log(analytics);
+  const {data: user} = useUser();
 
   return (
     <main>
@@ -44,8 +40,8 @@ export default function DashboardPage() {
 
           <div className="flex items-center gap-5">
             <ToggleDarkModeButton />
-            <span className="grid place-content-center w-4 h-4 p-4 aspect-square rounded-full bg-gray-300 text-foreground">
-              D
+            <span className="grid place-content-center w-4 h-4 p-4 aspect-square rounded-full bg-gray-300 text-foreground capitalize">
+              {user?.name?.charAt(0)}
             </span>
           </div>
         </header>

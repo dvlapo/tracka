@@ -3,7 +3,7 @@ import {formatCurrency} from '@/app/utils';
 interface AnalyticsCardProps {
   icon: any;
   title: string;
-  value: number;
+  value: number | undefined;
   type?: 'currency' | 'unitless';
 }
 
@@ -21,7 +21,7 @@ export default function AnalyticsCard({
       </div>
 
       <strong className="font-bold text-2xl text-foreground dark:text-background">
-        {type === 'currency' ? formatCurrency(value) : value}
+        {type === 'currency' ? formatCurrency(value ? value : 0) : value}
       </strong>
     </div>
   );

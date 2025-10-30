@@ -1,6 +1,14 @@
 import {useQuery} from '@tanstack/react-query';
 import {useUser} from '../auth/useUser';
 
+interface Analytics {
+  totalExpenses: number;
+  thisMonthExpenses: number;
+  totalCategories: number;
+  spendingByCategory: any[];
+  dailySpending: any[];
+}
+
 export const useDashboardAnalytics = () => {
   const {data: user} = useUser();
   const userId = user?.id;
@@ -17,7 +25,7 @@ export const useDashboardAnalytics = () => {
         }
 
         const data = await res.json();
-        return data;
+        return data as Analytics;
       } catch (error: any) {
         throw new Error(
           error?.message || 'An unexpected network error occurred'
