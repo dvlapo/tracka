@@ -1,13 +1,16 @@
 'use client';
 
-import {FaChartSimple, FaList} from 'react-icons/fa6';
+import {FaChartSimple} from 'react-icons/fa6';
 import TabNav, {Tab} from '../components/TabNav';
 import {useState} from 'react';
 import {FiPlus} from 'react-icons/fi';
 import {Button} from '../components/ui/Button';
 import ToggleDarkModeButton from '../components/ToggleDarkModeButton';
-import Analytics from './_components/dashboard/Analytics';
+import {BiCoinStack} from 'react-icons/bi';
 import Dashboard from './_components/dashboard/Dashboard';
+import {getCookie} from 'cookies-next';
+import {useUser} from '../hooks/auth/useUser';
+import {useDashboardAnalytics} from '../hooks/analytics/useDashboardAnalytics';
 
 const TABS: Tab[] = [
   {
@@ -20,12 +23,15 @@ const TABS: Tab[] = [
   },
   {
     name: 'All Expenses',
-    icon: <FaList />,
+    icon: <BiCoinStack />,
   },
 ];
 
 export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState<string>(TABS[0].name);
+  const {getDashboardAnalyticsQuery} = useDashboardAnalytics();
+  const {data: analytics} = getDashboardAnalyticsQuery;
+  // console.log(analytics);
 
   return (
     <main>
@@ -58,6 +64,7 @@ export default function DashboardPage() {
             label="Add Expense"
             icon={<FiPlus />}
             className="!text-sm !font-normal !px-2 !py-1 !w-fit"
+            onClick={() => setActiveTab('Add Expense')}
           />
         </section>
 

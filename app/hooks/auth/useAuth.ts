@@ -1,4 +1,5 @@
 import {useMutation} from '@tanstack/react-query';
+import {setCookie} from 'cookies-next';
 
 interface SignInPayload {
   email: string;
@@ -28,6 +29,10 @@ export const useAuth = () => {
         if (!res.ok) {
           throw new Error(data.error || 'Sign-in failed');
         }
+
+        setCookie('tracka-token', data.data.token);
+        const user = data.data.user;
+        setCookie('tracka-user', JSON.stringify(user), {maxAge: 60 * 60 * 24});
 
         return data;
       } catch (error: any) {

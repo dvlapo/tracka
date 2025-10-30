@@ -10,7 +10,6 @@ import {RiEyeCloseLine, RiEyeLine} from 'react-icons/ri';
 import {useAuth} from '@/app/hooks/auth/useAuth';
 import {toast} from 'sonner';
 import {useRouter} from 'next/navigation';
-import {setCookie} from 'cookies-next/client';
 
 export default function SignInForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -32,8 +31,7 @@ export default function SignInForm() {
 
   const onSubmit = (data: {email: string; password: string}) => {
     signInMutation.mutate(data, {
-      onSuccess(data) {
-        setCookie('tracka-token', data.data.token);
+      onSuccess() {
         router.replace('/dashboard');
       },
       onError(error) {

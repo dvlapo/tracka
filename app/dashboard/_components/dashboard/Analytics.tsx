@@ -1,13 +1,13 @@
+import {BiCoinStack} from 'react-icons/bi';
 import AnalyticsCard from './AnalyticsCard';
 import {GoGraph} from 'react-icons/go';
-import {HiOutlineCurrencyDollar} from 'react-icons/hi';
 import {LuCalendarRange} from 'react-icons/lu';
 
 export default function Analytics() {
   return (
     <section className="grid md:grid-cols-3 gap-4">
       <AnalyticsCard
-        icon={<HiOutlineCurrencyDollar size={20} />}
+        icon={<BiCoinStack size={20} />}
         title="Total Expenses"
         value={25.42}
       />
