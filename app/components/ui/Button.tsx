@@ -50,7 +50,7 @@ export function Button({
       return (
         <motion.button
           whileTap={btnWhileTap}
-          className={`bg-[#F7F7FC] hover:opacity-90 transition-opacity text-foreground py-2.5 rounded-lg w-full font-bold text-sm md:text-base focus:outline-2 focus:outline-foreground ${className}`}
+          className={`squircle bg-background dark:bg-foreground text-foreground dark:text-background hover:opacity-90 transition-opacity border border-gray-300 dark:border-gray-700 py-2.5 rounded-lg w-full font-semibold text-sm md:text-base focus-visible:outline-2 focus-visible:outline-gray-300 outline-offset-1 ${className}`}
           {...props}
         >
           {loading ? (

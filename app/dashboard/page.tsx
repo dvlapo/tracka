@@ -4,10 +4,10 @@ import {FaChartSimple} from 'react-icons/fa6';
 import TabNav, {Tab} from '../components/TabNav';
 import {useState} from 'react';
 import {FiPlus} from 'react-icons/fi';
-import {Button} from '../components/ui/Button';
 import ToggleDarkModeButton from '../components/ToggleDarkModeButton';
 import {BiCoinStack} from 'react-icons/bi';
 import Dashboard from './_components/dashboard/Dashboard';
+import AddExpenseForm from './_components/add-expense-form/AddExpenseForm';
 import {useUser} from '../hooks/auth/useUser';
 
 const TABS: Tab[] = [
@@ -48,23 +48,10 @@ export default function DashboardPage() {
 
         <TabNav tabs={TABS} activeTab={activeTab} setActiveTab={setActiveTab} />
 
-        <section className="my-7 md:flex justify-between items-start">
-          <div className="mb-4 md:mb-0">
-            <h2 className="mb-1 text-base">Tracka</h2>
-            <p className="text-sm text-gray-400">
-              Track your spending and stay within budget
-            </p>
-          </div>
-
-          <Button
-            label="Add Expense"
-            icon={<FiPlus />}
-            className="!text-sm !font-normal !px-2 !py-1 !w-fit"
-            onClick={() => setActiveTab('Add Expense')}
-          />
-        </section>
-
-        {activeTab === 'Dashboard' && <Dashboard />}
+        {activeTab === 'Dashboard' && <Dashboard setActiveTab={setActiveTab} />}
+        {activeTab === 'Add Expense' && (
+          <AddExpenseForm setActiveTab={setActiveTab} />
+        )}
       </div>
     </main>
   );

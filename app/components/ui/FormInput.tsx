@@ -22,7 +22,8 @@ export function FormInput({
     <div className="text-xs md:text-sm">
       <label
         htmlFor={props.id}
-        className="font-semibold text-foreground block mb-1"
+        aria-label={label}
+        className="font-semibold text-foreground dark:text-background block mb-1"
       >
         {label}
       </label>
@@ -31,7 +32,7 @@ export function FormInput({
           // @ts-expect-error
           '--rad': '20px',
         }}
-        className={`squircle w-full bg-gray-100 border border-gray-300 rounded-lg px-4 focus-within:outline-solid focus-within:outline-2 focus-within:outline-gray-300 grid gap-2 items-center ${
+        className={`squircle w-full bg-gray-100 dark:bg-transparent border border-gray-300 rounded-lg px-4 focus-within:outline-solid focus-within:outline-2 focus-within:outline-gray-300 grid gap-2 items-center ${
           rightIcon ? 'grid-cols-[1fr,20px]' : 'grid-cols-1'
         } ${error ? 'shake' : ''}`}
       >
@@ -39,7 +40,7 @@ export function FormInput({
           {leftIcon}
           <input
             type={type}
-            className="w-full border-none text-foreground bg-transparent outline-none placeholer-gray-1 py-2 md:py-3"
+            className="w-full border-none text-foreground dark:text-background bg-transparent outline-none placeholer-gray-1 py-2 md:py-3"
             onWheel={(e) => {
               if (type === 'number') {
                 e.currentTarget.blur();

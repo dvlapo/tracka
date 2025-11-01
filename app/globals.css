@@ -25,11 +25,13 @@ html {
   background: var(--background);
   color: var(--foreground);
   transition: background-color 150ms;
+  color-scheme: light;
 }
 
 html.dark {
   background: var(--foreground);
   color: var(--background);
+  color-scheme: dark;
 }
 
 @supports (corner-shape: squircle) {
