@@ -75,6 +75,31 @@ export const useExpense = () => {
     },
   });
 
+  const deleteExpenseMutation = useMutation({
+    mutationFn: async (id: string) => {
+      try {
+        const res = await fetch(`/api/expenses/delete?transactionId=${id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.error || 'Failed to delete expense');
+        }
+
+        return data;
+      } catch (error: any) {
+        throw new Error(
+          error?.message || 'An unexpected network error occurred'
+        );
+      }
+    },
+  });
+
   const addExpense = ({
     payload,
     options,
@@ -101,9 +126,36 @@ export const useExpense = () => {
     });
   };
 
+  const deleteExpense = ({
+    id,
+    options,
+  }: {
+    id: string;
+    options?: {
+      onSuccess: (data: any) => void;
+      onError?: (error: any) => void;
+    };
+  }) => {
+    deleteExpenseMutation.mutate(id, {
+      onSuccess(data) {
+        options?.onSuccess && options?.onSuccess(data);
+        queryClient.invalidateQueries({
+          queryKey: ['dashboard-analytics', userId],
+        });
+        queryClient.invalidateQueries({
+          queryKey: ['all-expenses', userId],
+        });
+      },
+      onError(error) {
+        options?.onError && options?.onError(error);
+      },
+    });
+  };
+
   return {
     addExpense,
     isLoading: addExpenseMutation.isPending,
     allExpenses: getAllExpensesQuery.data,
+    deleteExpense,
   };
 };

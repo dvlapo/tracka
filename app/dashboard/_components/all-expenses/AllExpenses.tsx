@@ -7,6 +7,7 @@ import {format} from 'date-fns';
 import {Dispatch, SetStateAction, useMemo, useState} from 'react';
 import {FiFilter, FiPlus, FiSearch} from 'react-icons/fi';
 import {IoTrashOutline} from 'react-icons/io5';
+import {toast} from 'sonner';
 
 const SORT_OPTIONS = [
   {
@@ -28,9 +29,9 @@ export default function AllExpenses({
 }: {
   setActiveTab: Dispatch<SetStateAction<string>>;
 }) {
-  const [sortOption, setSortOption] = useState(SORT_OPTIONS[0].value);
+  const [sortBy, setSortBy] = useState(SORT_OPTIONS[0].value);
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const {allExpenses} = useExpense();
+  const {allExpenses, deleteExpense} = useExpense();
   const [searchInput, setSearchInput] = useState('');
 
   const categories = useMemo(() => {
@@ -43,16 +44,55 @@ export default function AllExpenses({
 
     const formatted = Array.from(unique).map((cat: any) => ({
       label: cat,
-      value: cat.toLowerCase().replace(/\s+/g, '-'),
+      value: cat.toLowerCase(),
     }));
 
     return [{label: 'All categories', value: 'all'}, ...formatted];
   }, [allExpenses]);
 
+  const filteredAndSortedExpenses = useMemo(() => {
+    if (!allExpenses?.length) return [];
+
+    return allExpenses
+      ?.filter((expense) => {
+        const matchesSearch =
+          !searchInput ||
+          expense.description
+            ?.toLowerCase()
+            .includes(searchInput.toLowerCase());
+        const matchesCategory =
+          !selectedCategory ||
+          selectedCategory === 'all' ||
+          expense.category?.toLowerCase() === selectedCategory.toLowerCase();
+        return matchesSearch && matchesCategory;
+      })
+      .sort((a, b) => {
+        if (sortBy === 'amount') return b.amount - a.amount;
+        // @ts-expect-error
+        if (sortBy === 'date') return new Date(b.date) - new Date(a.date);
+        if (sortBy === 'category') return a.category.localeCompare(b.category);
+        return 0;
+      });
+  }, [allExpenses, searchInput, selectedCategory, sortBy]);
+
+  const handleDeleteExpense = (id: string) =>
+    deleteExpense({
+      id,
+      options: {
+        onSuccess(data) {
+          toast.success(data.message);
+        },
+        onError(error) {
+          console.log(error);
+          toast.error(error.message);
+        },
+      },
+    });
+
   return (
     <section className="my-7">
       <header className="flex justify-between items-start">
-        <h2 className="tex-base">All Expenses</h2>
+        <h2 className="text-base">All Expenses</h2>
 
         <Button
           label="Add Expense"
@@ -82,51 +122,45 @@ export default function AllExpenses({
           />
           <Select
             options={SORT_OPTIONS}
-            onChange={(event) => setSortOption(event.target.value)}
+            onChange={(event) => setSortBy(event.target.value)}
           />
         </div>
       </div>
 
       <ul>
-        {allExpenses
-          ?.filter((expense) => {
-            if (!searchInput) return true;
-            return expense.description
-              ?.toLowerCase()
-              .includes(searchInput.toLowerCase());
-          })
-          ?.map((expense) => (
-            <li key={expense.id} className="mb-3">
-              <div className="p-3 squircle flex justify-between items-center border border-gray-300 rounded-lg">
-                <div>
-                  <div className="flex gap-2 items-center">
-                    <p className="text-sm">{expense.description}</p>
-                    <span
-                      style={{
-                        color: CATEGORY_COLORS[expense.category],
-                        backgroundColor: `${
-                          CATEGORY_COLORS[expense.category]
-                        }30`,
-                      }}
-                      className={`squircle rounded-full text-[10px] px-2 py-0.5`}
-                    >
-                      {expense.category}
-                    </span>
-                  </div>
-                  <span className="text-xs text-gray-400">
-                    {format(expense.date, 'MMM dd, yyyy')}
+        {filteredAndSortedExpenses?.map((expense) => (
+          <li key={expense.id} className="mb-3">
+            <div className="p-3 squircle flex justify-between items-center border border-gray-300 rounded-lg">
+              <div>
+                <div className="flex gap-2 items-center">
+                  <p className="text-sm">{expense.description}</p>
+                  <span
+                    style={{
+                      color: CATEGORY_COLORS[expense.category],
+                      backgroundColor: `${CATEGORY_COLORS[expense.category]}20`,
+                    }}
+                    className={`squircle rounded-full text-[10px] px-2 py-0.5`}
+                  >
+                    {expense.category}
                   </span>
                 </div>
-
-                <div className="flex gap-4 items-center">
-                  <strong>{formatCurrency(expense.amount)}</strong>
-                  <button type="button">
-                    <IoTrashOutline className="text-red-500" />
-                  </button>
-                </div>
+                <span className="text-xs text-gray-400">
+                  {format(expense.date, 'MMM dd, yyyy')}
+                </span>
               </div>
-            </li>
-          ))}
+
+              <div className="flex gap-4 items-center">
+                <strong>{formatCurrency(expense.amount)}</strong>
+                <button
+                  type="button"
+                  onClick={() => handleDeleteExpense(expense.id)}
+                >
+                  <IoTrashOutline className="text-red-500" />
+                </button>
+              </div>
+            </div>
+          </li>
+        ))}
       </ul>
     </section>
   );

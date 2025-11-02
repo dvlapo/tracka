@@ -13,7 +13,7 @@ type Props = DetailedHTMLProps<
   };
 
 const btnWhileTap = {
-  scale: 0.95,
+  scale: 0.97,
 };
 
 export function Button({
@@ -69,7 +69,7 @@ export function Button({
 function LoadingSpinner() {
   return (
     <div className="flex items-center justify-center">
-      <div className="w-[1.5em] h-[1.5em] border-[3.5px] border-white border-t-black rounded-full animate-spin"></div>
+      <div className="w-[1.5em] h-[1.5em] border-[3.5px] border-background border-t-foreground dark:border-foreground dark:border-t-background rounded-full animate-spin"></div>
     </div>
   );
 }

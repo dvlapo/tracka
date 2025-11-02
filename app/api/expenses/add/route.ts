@@ -40,7 +40,6 @@ export async function POST(req: Request) {
       {status: 201}
     );
   } catch (error: any) {
-    console.log(error);
     return NextResponse.json({error: 'Failed to add expense'}, {status: 500});
   }
 }
