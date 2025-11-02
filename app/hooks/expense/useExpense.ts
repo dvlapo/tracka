@@ -9,6 +9,20 @@ export interface AddExpensePayload {
   userId: string;
 }
 
+interface Expense {
+  id: string;
+  description: string;
+  amount: number;
+  date: string;
+  category: string;
+  userId: string;
+  user: {
+    id: string;
+    name: string;
+    email: string;
+  };
+}
+
 export const useExpense = () => {
   const queryClient = useQueryClient();
   const {data: user} = useUser();
@@ -26,7 +40,7 @@ export const useExpense = () => {
         }
 
         const data = await res.json();
-        return data;
+        return data as Expense[];
       } catch (error: any) {
         throw new Error(
           error?.message || 'An unexpected network error occurred'
@@ -76,6 +90,9 @@ export const useExpense = () => {
         options?.onSuccess && options?.onSuccess(data);
         queryClient.invalidateQueries({
           queryKey: ['dashboard-analytics', data.transaction.user.id],
+        });
+        queryClient.invalidateQueries({
+          queryKey: ['all-expenses', data.transaction.user.id],
         });
       },
       onError(error) {

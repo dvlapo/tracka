@@ -3,7 +3,7 @@ import {FormInput} from '@/app/components/ui/FormInput';
 import {Select} from '@/app/components/ui/Select';
 import {useUser} from '@/app/hooks/auth/useUser';
 import {AddExpensePayload, useExpense} from '@/app/hooks/expense/useExpense';
-import {ChangeEvent, Dispatch, SetStateAction} from 'react';
+import {Dispatch, SetStateAction} from 'react';
 import {useForm} from 'react-hook-form';
 import {toast} from 'sonner';
 
@@ -95,8 +95,7 @@ export default function AddExpenseForm({
             label="Category"
             placeholder="Select category"
             options={CATEGORY_OPTIONS}
-            // @ts-expect-error
-            onChange={(event: ChangeEvent<HTMLSelectElement>) => {
+            onChange={(event) => {
               setValue('category', event.target.value);
             }}
           />

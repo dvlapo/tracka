@@ -1,18 +1,7 @@
+import {CATEGORY_COLORS} from '@/app/constants';
 import {Spending} from '@/app/hooks/analytics/useDashboardAnalytics';
 import {formatCurrency} from '@/app/utils';
 import {PieChart, Pie, Cell, Tooltip, ResponsiveContainer} from 'recharts';
-
-const COLORS = [
-  '#4A90E2',
-  '#9ded40',
-  '#50E3C2',
-  '#F5A623',
-  '#6A52DB',
-  '#0023E2',
-  '#e27500',
-  '#f155da',
-  '#e27a88',
-];
 
 export default function SpendingByCategory({
   spendingByCategory,
@@ -37,10 +26,10 @@ export default function SpendingByCategory({
             }
             className="text-xs"
           >
-            {spendingByCategory?.map((_, index) => (
+            {spendingByCategory?.map((category, index) => (
               <Cell
                 key={`cell-${index}`}
-                fill={COLORS[index % COLORS.length]}
+                fill={CATEGORY_COLORS[category.category]}
               />
             ))}
           </Pie>
