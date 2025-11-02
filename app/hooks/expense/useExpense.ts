@@ -1,4 +1,5 @@
-import {useMutation, useQueryClient} from '@tanstack/react-query';
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
+import {useUser} from '../auth/useUser';
 
 export interface AddExpensePayload {
   amount: number | null;
@@ -10,11 +11,34 @@ export interface AddExpensePayload {
 
 export const useExpense = () => {
   const queryClient = useQueryClient();
+  const {data: user} = useUser();
+  const userId = user?.id;
+
+  const getAllExpensesQuery = useQuery({
+    queryKey: ['all-expenses', userId],
+    queryFn: async () => {
+      try {
+        const res = await fetch(`/api/expenses?userId=${userId}`);
+
+        if (!res.ok) {
+          const errorText = await res.text();
+          throw new Error(errorText || 'Failed to fetch expenses');
+        }
+
+        const data = await res.json();
+        return data;
+      } catch (error: any) {
+        throw new Error(
+          error?.message || 'An unexpected network error occurred'
+        );
+      }
+    },
+  });
 
   const addExpenseMutation = useMutation({
     mutationFn: async (payload: AddExpensePayload) => {
       try {
-        const res = await fetch('/api/expense/add', {
+        const res = await fetch('/api/expenses/add', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -63,5 +87,6 @@ export const useExpense = () => {
   return {
     addExpense,
     isLoading: addExpenseMutation.isPending,
+    allExpenses: getAllExpensesQuery.data,
   };
 };

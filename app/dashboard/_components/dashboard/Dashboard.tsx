@@ -41,7 +41,7 @@ export default function Dashboard({
         <SpendingByCategory
           spendingByCategory={analytics?.spendingByCategory as Spending[]}
         />
-        <DailySpending />
+        <DailySpending dailySpending={analytics?.dailySpending as []} />
       </section>
     </section>
   );

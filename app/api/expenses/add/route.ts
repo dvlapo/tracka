@@ -22,19 +22,20 @@ export async function POST(req: Request) {
         userId,
       },
       include: {
-        user: true,
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
       },
     });
-
-    const {password, ...userWithoutPassword} = transaction.user;
 
     return NextResponse.json(
       {
         message: 'Expense added successfully',
-        transaction: {
-          ...transaction,
-          user: userWithoutPassword,
-        },
+        transaction,
       },
       {status: 201}
     );

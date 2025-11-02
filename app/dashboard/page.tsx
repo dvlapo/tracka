@@ -9,6 +9,7 @@ import {BiCoinStack} from 'react-icons/bi';
 import Dashboard from './_components/dashboard/Dashboard';
 import AddExpenseForm from './_components/add-expense-form/AddExpenseForm';
 import {useUser} from '../hooks/auth/useUser';
+import AllExpenses from './_components/all-expenses/AllExpenses';
 
 const TABS: Tab[] = [
   {
@@ -31,7 +32,7 @@ export default function DashboardPage() {
 
   return (
     <main>
-      <div className="w-[min(900px,90%)] mx-auto py-10 md:py:20">
+      <div className="w-[min(900px,90%)] mx-auto py-10 md:py-20">
         <header className="flex justify-between items-center mb-8">
           <h1 className="flex items-center gap-1">
             <FaChartSimple />
@@ -51,6 +52,9 @@ export default function DashboardPage() {
         {activeTab === 'Dashboard' && <Dashboard setActiveTab={setActiveTab} />}
         {activeTab === 'Add Expense' && (
           <AddExpenseForm setActiveTab={setActiveTab} />
+        )}
+        {activeTab === 'All Expenses' && (
+          <AllExpenses setActiveTab={setActiveTab} />
         )}
       </div>
     </main>

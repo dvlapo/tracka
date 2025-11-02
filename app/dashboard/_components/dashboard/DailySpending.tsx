@@ -9,17 +9,7 @@ import {
   CartesianGrid,
 } from 'recharts';
 
-const dailySpending = [
-  {date: '2025-10-20', total: 400},
-  {date: '2025-10-21', total: 200},
-  {date: '2025-10-22', total: 10},
-  {date: '2025-10-23', total: 0},
-  {date: '2025-10-24', total: 900},
-  {date: '2025-10-25', total: 1300},
-  {date: '2025-10-26', total: 1000},
-];
-
-export default function DailySpending() {
+export default function DailySpending({dailySpending}: {dailySpending: []}) {
   return (
     <div className="squircle border border-gray-300 rounded-2xl p-4">
       <h3 className="text-sm mb-6">Daily Spending (last 7 days)</h3>
