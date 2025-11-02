@@ -26,7 +26,18 @@ export async function POST(req: Request) {
       },
     });
 
-    return NextResponse.json(transaction, {status: 201});
+    const {password, ...userWithoutPassword} = transaction.user;
+
+    return NextResponse.json(
+      {
+        message: 'Expense added successfully',
+        transaction: {
+          ...transaction,
+          user: userWithoutPassword,
+        },
+      },
+      {status: 201}
+    );
   } catch (error: any) {
     console.log(error);
     return NextResponse.json({error: 'Failed to add expense'}, {status: 500});

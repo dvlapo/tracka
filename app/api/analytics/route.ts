@@ -12,7 +12,6 @@ export async function GET(req: Request) {
     // All user transactions
     const transactions = await prisma.transaction.findMany({
       where: {userId},
-      include: {category: true},
     });
 
     if (!transactions.length) {
@@ -36,13 +35,16 @@ export async function GET(req: Request) {
       .filter((t) => t.date >= monthStart && t.date <= monthEnd)
       .reduce((sum, t) => sum + t.amount, 0);
 
-    // Total categories
-    const totalCategories = await prisma.category.count({where: {userId}});
+    // Unique category count
+    const uniqueCategories = new Set(
+      transactions.map((t) => t.category || 'Other')
+    );
+    const totalCategories = uniqueCategories.size;
 
     // Spending by category
     const spendingByCategoryMap: Record<string, number> = {};
     for (const t of transactions) {
-      const name = t.category?.name || 'Uncategorized';
+      const name = t.category || 'Other';
       spendingByCategoryMap[name] =
         (spendingByCategoryMap[name] || 0) + t.amount;
     }

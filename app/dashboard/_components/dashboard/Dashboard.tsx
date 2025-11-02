@@ -4,12 +4,19 @@ import DailySpending from './DailySpending';
 import SpendingByCategory from './SpendingByCategory';
 import {FiPlus} from 'react-icons/fi';
 import {Dispatch, SetStateAction} from 'react';
+import {
+  Spending,
+  useDashboardAnalytics,
+} from '@/app/hooks/analytics/useDashboardAnalytics';
 
 export default function Dashboard({
   setActiveTab,
 }: {
   setActiveTab: Dispatch<SetStateAction<string>>;
 }) {
+  const {getDashboardAnalyticsQuery} = useDashboardAnalytics();
+  const {data: analytics} = getDashboardAnalyticsQuery;
+
   return (
     <section>
       <section className="my-7 md:flex justify-between items-start">
@@ -28,10 +35,12 @@ export default function Dashboard({
         />
       </section>
 
-      <Analytics />
+      <Analytics analytics={analytics} />
 
       <section className="mt-8 grid md:grid-cols-2 gap-4">
-        <SpendingByCategory />
+        <SpendingByCategory
+          spendingByCategory={analytics?.spendingByCategory as Spending[]}
+        />
         <DailySpending />
       </section>
     </section>

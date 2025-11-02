@@ -52,12 +52,12 @@ export default function AddExpenseForm({
   setActiveTab: Dispatch<SetStateAction<string>>;
 }) {
   const {data: user} = useUser();
-  const {addExpenseMutation} = useExpense();
+  const {addExpense, isLoading} = useExpense();
 
   const {register, handleSubmit, setValue} = useForm({
     defaultValues: {
       amount: null,
-      category: '',
+      category: CATEGORY_OPTIONS[0].value,
       date: new Date().toISOString().split('T')[0],
       description: '',
       userId: user.id,
@@ -65,12 +65,16 @@ export default function AddExpenseForm({
   });
 
   const onSubmit = (data: AddExpensePayload) => {
-    addExpenseMutation.mutate(data, {
-      onSuccess(data) {
-        console.log(data);
-      },
-      onError(error: any) {
-        toast.error(error.message);
+    addExpense({
+      payload: data,
+      options: {
+        onSuccess(data) {
+          toast.success(data.message);
+          setActiveTab('Dashboard');
+        },
+        onError(error) {
+          toast.error(error.message);
+        },
       },
     });
   };
@@ -123,7 +127,7 @@ export default function AddExpenseForm({
             label="Add Expense"
             type="submit"
             className="!text-sm !font-normal"
-            loading={addExpenseMutation.isPending}
+            loading={isLoading}
           />
           <Button
             label="Cancel"

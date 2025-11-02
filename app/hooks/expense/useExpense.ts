@@ -1,4 +1,4 @@
-import {useMutation} from '@tanstack/react-query';
+import {useMutation, useQueryClient} from '@tanstack/react-query';
 
 export interface AddExpensePayload {
   amount: number | null;
@@ -9,10 +9,12 @@ export interface AddExpensePayload {
 }
 
 export const useExpense = () => {
+  const queryClient = useQueryClient();
+
   const addExpenseMutation = useMutation({
     mutationFn: async (payload: AddExpensePayload) => {
       try {
-        const res = await fetch('/api/expense/add-expense', {
+        const res = await fetch('/api/expense/add', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -35,7 +37,31 @@ export const useExpense = () => {
     },
   });
 
+  const addExpense = ({
+    payload,
+    options,
+  }: {
+    payload: AddExpensePayload;
+    options?: {
+      onSuccess: (data: any) => void;
+      onError?: (error: any) => void;
+    };
+  }) => {
+    addExpenseMutation.mutate(payload, {
+      onSuccess(data) {
+        options?.onSuccess && options?.onSuccess(data);
+        queryClient.invalidateQueries({
+          queryKey: ['dashboard-analytics', data.transaction.user.id],
+        });
+      },
+      onError(error) {
+        options?.onError && options?.onError(error);
+      },
+    });
+  };
+
   return {
-    addExpenseMutation,
+    addExpense,
+    isLoading: addExpenseMutation.isPending,
   };
 };

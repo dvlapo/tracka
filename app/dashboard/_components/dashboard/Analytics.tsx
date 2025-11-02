@@ -2,12 +2,14 @@ import {BiCoinStack} from 'react-icons/bi';
 import AnalyticsCard from './AnalyticsCard';
 import {GoGraph} from 'react-icons/go';
 import {LuCalendarRange} from 'react-icons/lu';
-import {useDashboardAnalytics} from '@/app/hooks/analytics/useDashboardAnalytics';
 
-export default function Analytics() {
-  const {getDashboardAnalyticsQuery} = useDashboardAnalytics();
-  const {data: analytics} = getDashboardAnalyticsQuery;
+interface AnalyticsProps {
+  totalExpenses: number;
+  thisMonthExpenses: number;
+  totalCategories: number;
+}
 
+export default function Analytics({analytics}: {analytics?: AnalyticsProps}) {
   return (
     <section className="grid md:grid-cols-3 gap-4">
       <AnalyticsCard

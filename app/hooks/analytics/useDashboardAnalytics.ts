@@ -1,11 +1,12 @@
 import {useQuery} from '@tanstack/react-query';
 import {useUser} from '../auth/useUser';
 
+export type Spending = {category: string; total: number; percentage: number};
 interface Analytics {
   totalExpenses: number;
   thisMonthExpenses: number;
   totalCategories: number;
-  spendingByCategory: any[];
+  spendingByCategory: Spending[];
   dailySpending: any[];
 }
 

@@ -1,15 +1,24 @@
+import {Spending} from '@/app/hooks/analytics/useDashboardAnalytics';
 import {formatCurrency} from '@/app/utils';
 import {PieChart, Pie, Cell, Tooltip, ResponsiveContainer} from 'recharts';
 
-const COLORS = ['#4A90E2', '#50E3C2', '#F5A623', '#D0021B'];
-
-const spendingByCategory = [
-  {category: 'Transportation', total: 600, percentage: 60},
-  {category: 'Groceries', total: 250, percentage: 25},
-  {category: 'Entertainment', total: 150, percentage: 15},
+const COLORS = [
+  '#4A90E2',
+  '#9ded40',
+  '#50E3C2',
+  '#F5A623',
+  '#6A52DB',
+  '#0023E2',
+  '#e27500',
+  '#f155da',
+  '#e27a88',
 ];
 
-export default function SpendingByCategory() {
+export default function SpendingByCategory({
+  spendingByCategory,
+}: {
+  spendingByCategory: Spending[];
+}) {
   return (
     <div className="squircle border border-gray-300 rounded-2xl p-4">
       <h3 className="text-sm mb-6">Spending by Category</h3>
