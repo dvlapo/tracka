@@ -20,9 +20,9 @@ export default function DailySpending({dailySpending}: {dailySpending: []}) {
           <XAxis dataKey="date" />
           <YAxis />
           <Tooltip
-            // formatter={(value, name) => {
-            //   return [formatCurrency(value as number), name];
-            // }}
+            formatter={(value, name) => {
+              return [formatCurrency(value as number), name];
+            }}
             labelClassName="text-sm text-foreground"
             contentStyle={{
               fontSize: '0.875rem',
