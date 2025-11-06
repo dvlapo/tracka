@@ -33,7 +33,7 @@ export function Button({
             '--rad': '20px',
           }}
           whileTap={btnWhileTap}
-          className={`squircle bg-foreground dark:bg-background text-background dark:text-foreground hover:opacity-90 transition-opacity py-2.5 rounded-lg w-full font-semibold text-sm md:text-base focus-visible:outline-2 focus-visible:outline-gray-300 outline-offset-1 ${className}`}
+          className={`squircle bg-foreground dark:bg-background text-background dark:text-foreground hover:opacity-90 transition-opacity py-2.5 rounded-lg w-full font-semibold text-sm md:text-base focus-visible:outline-2 focus-visible:outline-gray-300 outline-offset-1 cursor-pointer ${className}`}
           {...props}
         >
           {loading ? (
@@ -50,7 +50,7 @@ export function Button({
       return (
         <motion.button
           whileTap={btnWhileTap}
-          className={`squircle bg-background dark:bg-foreground text-foreground dark:text-background hover:opacity-90 transition-opacity border border-gray-300 dark:border-gray-700 py-2.5 rounded-lg w-full font-semibold text-sm md:text-base focus-visible:outline-2 focus-visible:outline-gray-300 outline-offset-1 ${className}`}
+          className={`squircle bg-background dark:bg-foreground text-foreground dark:text-background hover:opacity-90 transition-opacity border border-gray-300 dark:border-gray-700 py-2.5 rounded-lg w-full font-semibold text-sm md:text-base focus-visible:outline-2 focus-visible:outline-gray-300 outline-offset-1 cursor-pointer ${className}`}
           {...props}
         >
           {loading ? (

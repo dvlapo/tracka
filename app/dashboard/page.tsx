@@ -8,8 +8,8 @@ import ToggleDarkModeButton from '../components/ToggleDarkModeButton';
 import {BiCoinStack} from 'react-icons/bi';
 import Dashboard from './_components/dashboard/Dashboard';
 import AddExpenseForm from './_components/add-expense-form/AddExpenseForm';
-import {useUser} from '../hooks/auth/useUser';
 import AllExpenses from './_components/all-expenses/AllExpenses';
+import ProfileDropdown from './_components/dashboard/ProfileDropdown';
 
 const TABS: Tab[] = [
   {
@@ -28,7 +28,6 @@ const TABS: Tab[] = [
 
 export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState<string>(TABS[0].name);
-  const {data: user} = useUser();
 
   return (
     <main>
@@ -39,11 +38,9 @@ export default function DashboardPage() {
             Tracka
           </h1>
 
-          <div className="flex items-center gap-5">
+          <div className="flex items-center gap-5 relative">
             <ToggleDarkModeButton />
-            <span className="grid place-content-center w-4 h-4 p-4 aspect-square rounded-full bg-gray-300 text-foreground capitalize">
-              {user?.name?.charAt(0)}
-            </span>
+            <ProfileDropdown />
           </div>
         </header>
 
