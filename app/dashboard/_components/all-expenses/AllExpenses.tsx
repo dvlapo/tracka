@@ -31,7 +31,7 @@ export default function AllExpenses({
 }) {
   const [sortBy, setSortBy] = useState(SORT_OPTIONS[0].value);
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const {allExpenses, deleteExpense} = useExpense();
+  const {allExpenses, isLoadingExpenses, deleteExpense} = useExpense();
   const [searchInput, setSearchInput] = useState('');
 
   const categories = useMemo(() => {
@@ -83,11 +83,14 @@ export default function AllExpenses({
           toast.success(data.message);
         },
         onError(error) {
-          console.log(error);
           toast.error(error.message);
         },
       },
     });
+
+  if (isLoadingExpenses) {
+    return <h1 className="mt-7 text-center">Loading expenses...</h1>;
+  }
 
   return (
     <section className="my-7">

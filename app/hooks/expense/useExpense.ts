@@ -154,8 +154,9 @@ export const useExpense = () => {
 
   return {
     addExpense,
-    isLoading: addExpenseMutation.isPending,
+    isLoadingAddExpense: addExpenseMutation.isPending,
     allExpenses: getAllExpensesQuery.data,
+    isLoadingExpenses: getAllExpensesQuery.isLoading,
     deleteExpense,
   };
 };

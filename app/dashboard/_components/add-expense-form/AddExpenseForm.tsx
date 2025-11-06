@@ -3,6 +3,8 @@ import {FormInput} from '@/app/components/ui/FormInput';
 import {Select} from '@/app/components/ui/Select';
 import {useUser} from '@/app/hooks/auth/useUser';
 import {AddExpensePayload, useExpense} from '@/app/hooks/expense/useExpense';
+import {addExpenseSchema} from '@/validations/addExpense';
+import {zodResolver} from '@hookform/resolvers/zod';
 import {Dispatch, SetStateAction} from 'react';
 import {useForm} from 'react-hook-form';
 import {toast} from 'sonner';
@@ -52,9 +54,14 @@ export default function AddExpenseForm({
   setActiveTab: Dispatch<SetStateAction<string>>;
 }) {
   const {data: user} = useUser();
-  const {addExpense, isLoading} = useExpense();
+  const {addExpense, isLoadingAddExpense} = useExpense();
 
-  const {register, handleSubmit, setValue} = useForm({
+  const {
+    register,
+    formState: {errors, isDirty},
+    handleSubmit,
+    setValue,
+  } = useForm({
     defaultValues: {
       amount: null,
       category: CATEGORY_OPTIONS[0].value,
@@ -62,6 +69,7 @@ export default function AddExpenseForm({
       description: '',
       userId: user.id,
     },
+    resolver: zodResolver(addExpenseSchema),
   });
 
   const onSubmit = (data: AddExpensePayload) => {
@@ -89,7 +97,8 @@ export default function AddExpenseForm({
             label="Amount"
             type="number"
             placeholder="0.00"
-            {...register('amount')}
+            {...register('amount', {valueAsNumber: true})}
+            error={errors.amount?.message?.toString()}
           />
           <Select
             label="Category"
@@ -98,11 +107,17 @@ export default function AddExpenseForm({
             onChange={(event) => {
               setValue('category', event.target.value);
             }}
+            error={errors.category?.message?.toString()}
           />
         </div>
 
         <div className="mb-5">
-          <FormInput label="Date" type="date" {...register('date')} />
+          <FormInput
+            label="Date"
+            type="date"
+            {...register('date')}
+            error={errors.date?.message?.toString()}
+          />
         </div>
 
         <div className="mb-5 text-xs md:text-sm">
@@ -117,8 +132,15 @@ export default function AddExpenseForm({
             id="description"
             placeholder="Enter expense description"
             {...register('description')}
-            className="squircle w-full bg-gray-100 dark:bg-transparent border border-gray-300 rounded-lg px-4 py-2 md:py-3 focus-within:outline-solid focus-within:outline-2 focus-within:outline-gray-300 grid gap-2 items-center text-xs md:text-sm max-h-[200px]"
+            className={`squircle w-full bg-gray-100 dark:bg-transparent border border-gray-300 rounded-lg px-4 py-2 md:py-3 focus-within:outline-solid focus-within:outline-2 focus-within:outline-gray-300 grid gap-2 items-center text-xs md:text-sm max-h-[200px] ${
+              errors.description ? 'shake' : ''
+            }`}
           ></textarea>
+          {errors.description && (
+            <small className="text-red-500 text-xs">
+              {errors.description?.message?.toString()}
+            </small>
+          )}
         </div>
 
         <div className="mt-8 grid sm:grid-cols-[85%_1fr] gap-4">
@@ -126,7 +148,7 @@ export default function AddExpenseForm({
             label="Add Expense"
             type="submit"
             className="!text-sm !font-normal"
-            loading={isLoading}
+            loading={isLoadingAddExpense}
           />
           <Button
             label="Cancel"

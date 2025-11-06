@@ -14,7 +14,7 @@ export async function DELETE(req: Request) {
 
     return NextResponse.json(
       {
-        message: 'Expense added successfully',
+        message: 'Expense deleted successfully',
         deletedTransaction,
       },
       {status: 200}

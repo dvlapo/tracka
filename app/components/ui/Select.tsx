@@ -44,7 +44,7 @@ export function Select({
           <select
             onChange={onChange}
             {...props}
-            className={`appearance-none bg-gray-100 dark:bg-foreground text-foreground dark:text-background ${
+            className={`appearance-none outline-none border-none bg-gray-100 dark:bg-foreground text-foreground dark:text-background ${
               icon ? 'mx-5' : ''
             }`}
           >
