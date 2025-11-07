@@ -1,13 +1,14 @@
 import {Button} from '@/app/components/ui/Button';
 import {useUser} from '@/app/hooks/auth/useUser';
+import useClickOutside from '@/app/hooks/useClickOutside';
 import {deleteCookie} from 'cookies-next';
 import {AnimatePresence, motion} from 'motion/react';
 import {useRouter} from 'next/navigation';
-import {useRef, useState, useEffect} from 'react';
+import {useRef, useState, RefObject} from 'react';
 import {IoLogOutOutline} from 'react-icons/io5';
 
 export default function ProfileDropdown() {
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<any>(null) as RefObject<any>;
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const {data: user} = useUser();
   const router = useRouter();
@@ -18,19 +19,7 @@ export default function ProfileDropdown() {
     router.replace('/auth');
   };
 
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setShowProfileDropdown(false);
-      }
-    }
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [dropdownRef, setShowProfileDropdown]);
+  useClickOutside(dropdownRef, () => setShowProfileDropdown(false));
 
   return (
     <div ref={dropdownRef}>

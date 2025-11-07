@@ -58,7 +58,7 @@ export default function AddExpenseForm({
 
   const {
     register,
-    formState: {errors, isDirty},
+    formState: {errors},
     handleSubmit,
     setValue,
   } = useForm({
@@ -74,7 +74,7 @@ export default function AddExpenseForm({
 
   const onSubmit = (data: AddExpensePayload) => {
     addExpense({
-      payload: data,
+      payload: {...data, date: new Date(data.date).toISOString()},
       options: {
         onSuccess(data) {
           toast.success(data.message);

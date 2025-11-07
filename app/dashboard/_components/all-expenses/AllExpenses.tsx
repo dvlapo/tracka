@@ -12,7 +12,7 @@ import {toast} from 'sonner';
 const SORT_OPTIONS = [
   {
     label: 'Date',
-    value: 'date',
+    value: 'default',
   },
   {
     label: 'Amount',
@@ -36,7 +36,7 @@ export default function AllExpenses({
 
   const categories = useMemo(() => {
     if (!allExpenses || allExpenses.length === 0)
-      return [{label: 'All', value: 'all'}];
+      return [{label: 'All categories', value: 'all'}];
 
     const unique = new Set(
       allExpenses.map((expense: any) => expense.category).filter(Boolean)
@@ -53,26 +53,27 @@ export default function AllExpenses({
   const filteredAndSortedExpenses = useMemo(() => {
     if (!allExpenses?.length) return [];
 
-    return allExpenses
-      ?.filter((expense) => {
-        const matchesSearch =
-          !searchInput ||
-          expense.description
-            ?.toLowerCase()
-            .includes(searchInput.toLowerCase());
-        const matchesCategory =
-          !selectedCategory ||
-          selectedCategory === 'all' ||
-          expense.category?.toLowerCase() === selectedCategory.toLowerCase();
-        return matchesSearch && matchesCategory;
-      })
-      .sort((a, b) => {
-        if (sortBy === 'amount') return b.amount - a.amount;
-        // @ts-expect-error
-        if (sortBy === 'date') return new Date(b.date) - new Date(a.date);
-        if (sortBy === 'category') return a.category.localeCompare(b.category);
-        return 0;
-      });
+    const filtered = allExpenses.filter((expense) => {
+      const matchesSearch =
+        !searchInput ||
+        expense.description?.toLowerCase().includes(searchInput.toLowerCase());
+      const matchesCategory =
+        !selectedCategory ||
+        selectedCategory === 'all' ||
+        expense.category?.toLowerCase() === selectedCategory.toLowerCase();
+      return matchesSearch && matchesCategory;
+    });
+
+    if (sortBy === 'default' || !sortBy) return filtered;
+
+    // copy before sorting to avoid mutating original
+    const sorted = [...filtered].sort((a, b) => {
+      if (sortBy === 'amount') return b.amount - a.amount;
+      if (sortBy === 'category') return a.category.localeCompare(b.category);
+      return 0;
+    });
+
+    return sorted;
   }, [allExpenses, searchInput, selectedCategory, sortBy]);
 
   const handleDeleteExpense = (id: string) =>
