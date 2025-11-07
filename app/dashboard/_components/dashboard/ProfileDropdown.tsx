@@ -31,6 +31,7 @@ export default function ProfileDropdown() {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [dropdownRef, setShowProfileDropdown]);
+
   return (
     <div ref={dropdownRef}>
       <button
@@ -46,20 +47,21 @@ export default function ProfileDropdown() {
           <motion.div
             initial={{
               opacity: 0,
-              scale: 0.8,
+              scale: 0.6,
+            }}
+            transition={{
+              duration: 0.4,
+              ease: 'easeOut',
+              type: 'spring',
             }}
             animate={{
               opacity: 1,
-              scale: 1,
+              scale: [1.06, 1],
               transformOrigin: 'top right',
-              transition: {
-                duration: 0.1,
-                ease: 'easeOut',
-              },
             }}
             exit={{
               opacity: 0,
-              scale: 0.8,
+              scale: 0.9,
             }}
             className="squircle border-2 border-gray-300 dark:border-gray-500 rounded-lg w-fit p-3 absolute top-full right-0 mt-2 z-50 bg-background text-foreground dark:bg-foreground dark:text-background"
           >

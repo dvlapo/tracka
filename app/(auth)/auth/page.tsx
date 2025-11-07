@@ -45,7 +45,7 @@ export default function AuthPage() {
           </motion.span>
         )}
       </p>
-      <section className="bg-background px-4 py-6 border-[0.5px] border-gray-300 rounded-lg ">
+      <section className="bg-background dark:bg-foreground px-4 py-6 border-[0.5px] border-gray-300 rounded-lg ">
         <TabNav tabs={TABS} activeTab={activeTab} setActiveTab={setActiveTab} />
 
         {activeTab === 'Sign In' && <SignInForm />}

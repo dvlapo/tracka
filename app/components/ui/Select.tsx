@@ -36,7 +36,7 @@ export function Select({
 
       <div className="relative">
         <div
-          className={`squircle w-full bg-gray-100 dark:bg-foreground border border-gray-300 rounded-lg px-4 py-2 md:py-3 focus-within:outline-solid focus-within:outline-2 focus-within:outline-gray-300 grid gap-2 items-center font-sans text-xs md:text-sm ${className}`}
+          className={`squircle w-full bg-gray-100 dark:bg-foreground px-4 border border-gray-300 rounded-lg  focus-within:outline-solid focus-within:outline-2 focus-within:outline-gray-300 grid gap-2 items-center font-sans text-xs md:text-sm ${className}`}
         >
           <span className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none">
             {icon}
@@ -44,7 +44,7 @@ export function Select({
           <select
             onChange={onChange}
             {...props}
-            className={`appearance-none outline-none border-none bg-gray-100 dark:bg-foreground text-foreground dark:text-background ${
+            className={`appearance-none outline-none border-none bg-gray-100 dark:bg-foreground text-foreground  py-2 md:py-3 dark:text-background ${
               icon ? 'mx-5' : ''
             }`}
           >

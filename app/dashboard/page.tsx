@@ -31,7 +31,7 @@ export default function DashboardPage() {
 
   return (
     <main>
-      <div className="w-[min(900px,90%)] mx-auto py-10 md:py-20">
+      <div className="w-[min(900px,90%)] mx-auto py-10 lg:py-20">
         <header className="flex justify-between items-center mb-8">
           <h1 className="flex items-center gap-1">
             <FaChartSimple />
