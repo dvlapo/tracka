@@ -134,9 +134,9 @@ export default function AllExpenses({
       <ul>
         {filteredAndSortedExpenses?.map((expense) => (
           <li key={expense.id} className="mb-3">
-            <div className="p-3 squircle flex justify-between items-center border border-gray-300 rounded-lg">
+            <div className="p-3 squircle flex justify-between md:items-center border border-gray-300 rounded-lg">
               <div>
-                <div className="flex gap-2 items-center">
+                <div className="flex flex-col-reverse md:flex-row gap-2 items-start md:items-center">
                   <p className="text-sm">{expense.description}</p>
                   <span
                     style={{
