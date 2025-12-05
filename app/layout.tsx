@@ -37,6 +37,7 @@ export default function RootLayout({
       >
         <Toaster
           richColors
+          position="bottom-center"
           toastOptions={{
             classNames: {
               title: '!font-sans !text-sm',
