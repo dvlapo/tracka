@@ -22,6 +22,7 @@ interface Expense {
     email: string;
   };
 }
+const BASE_URL = process.env.NEXT_PUBLIC_DATABASE_URL;
 
 export const useExpense = () => {
   const queryClient = useQueryClient();
@@ -32,7 +33,7 @@ export const useExpense = () => {
     queryKey: ['all-expenses', userId],
     queryFn: async () => {
       try {
-        const res = await fetch(`/api/expenses?userId=${userId}`);
+        const res = await fetch(`/${BASE_URL}/api/expenses?userId=${userId}`);
 
         if (!res.ok) {
           const errorText = await res.text();
@@ -52,7 +53,7 @@ export const useExpense = () => {
   const addExpenseMutation = useMutation({
     mutationFn: async (payload: AddExpensePayload) => {
       try {
-        const res = await fetch('/api/expenses/add', {
+        const res = await fetch(`/${BASE_URL}/api/expenses/add`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -78,12 +79,15 @@ export const useExpense = () => {
   const deleteExpenseMutation = useMutation({
     mutationFn: async (id: string) => {
       try {
-        const res = await fetch(`/api/expenses/delete?transactionId=${id}`, {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
+        const res = await fetch(
+          `/${BASE_URL}/api/expenses/delete?transactionId=${id}`,
+          {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        );
 
         const data = await res.json();
 
