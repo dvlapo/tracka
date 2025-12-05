@@ -12,13 +12,11 @@ interface SignUpPayload {
   password: string;
 }
 
-const BASE_URL = process.env.NEXT_PUBLIC_DATABASE_URL;
-
 export const useAuth = () => {
   const signInMutation = useMutation({
     mutationFn: async (payload: SignInPayload) => {
       try {
-        const res = await fetch(`${BASE_URL}/api/auth/sign-in`, {
+        const res = await fetch('/api/auth/sign-in', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -48,7 +46,7 @@ export const useAuth = () => {
   const signUpMutation = useMutation({
     mutationFn: async (payload: SignUpPayload) => {
       try {
-        const res = await fetch(`${BASE_URL}/api/auth/register`, {
+        const res = await fetch('/api/auth/register', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

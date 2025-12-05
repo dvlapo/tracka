@@ -14,7 +14,7 @@
     "@hookform/resolvers": "^5.2.2",
     "@prisma/client": "^6.17.0",
     "@tanstack/react-query": "^5.90.2",
-    "bcrypt": "^6.0.0",
+    "bcryptjs": "^3.0.3",
     "cookies-next": "^6.1.1",
     "date-fns": "^4.1.0",
     "jsonwebtoken": "^9.0.2",

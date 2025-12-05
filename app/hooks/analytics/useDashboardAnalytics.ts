@@ -10,8 +10,6 @@ interface Analytics {
   dailySpending: any[];
 }
 
-const BASE_URL = process.env.NEXT_PUBLIC_DATABASE_URL;
-
 export const useDashboardAnalytics = () => {
   const {data: user} = useUser();
   const userId = user?.id;
@@ -20,7 +18,7 @@ export const useDashboardAnalytics = () => {
     queryKey: ['dashboard-analytics', userId],
     queryFn: async () => {
       try {
-        const res = await fetch(`/${BASE_URL}/api/analytics?userId=${userId}`);
+        const res = await fetch(`/api/analytics?userId=${userId}`);
 
         if (!res.ok) {
           const errorText = await res.text();
