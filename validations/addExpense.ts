@@ -16,4 +16,4 @@ export const addExpenseSchema = z.object({
   userId: z.string(),
 });
 
-export type SignInInput = z.infer<typeof addExpenseSchema>;
+export type AddExpenseInput = z.infer<typeof addExpenseSchema>;

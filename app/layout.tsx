@@ -1,12 +1,5 @@
 import type {Metadata} from 'next';
-import {
-  Geist,
-  Geist_Mono,
-  Inter,
-  Rethink_Sans,
-  Be_Vietnam_Pro,
-  Schibsted_Grotesk,
-} from 'next/font/google';
+import {Geist, Geist_Mono, Inter} from 'next/font/google';
 import './globals.css';
 import Providers from './providers';
 import {Toaster} from 'sonner';
@@ -14,6 +7,7 @@ import {Toaster} from 'sonner';
 const geistSans = Geist({
   variable: '--font-geist-sans',
   subsets: ['latin'],
+  weight: ['400', '500', '600'],
 });
 
 const geistMono = Geist_Mono({
