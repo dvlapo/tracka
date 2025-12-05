@@ -152,6 +152,10 @@ const config = {
         "fromEnvVar": null,
         "value": "windows",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "rhel-openssl-3.0.x"
       }
     ],
     "previewFeatures": [],
@@ -169,6 +173,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -177,8 +182,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../app/generated/prisma\"\n}\n\ndatasource db {\n  provider  = \"postgresql\"\n  url       = env(\"DATABASE_URL\")\n  directUrl = env(\"DIRECT_URL\")\n}\n\nmodel User {\n  id           String        @id @default(uuid())\n  email        String        @unique\n  password     String        @db.VarChar(100)\n  name         String?\n  transactions Transaction[]\n  createdAt    DateTime      @default(now())\n}\n\nmodel Transaction {\n  id          String   @id @default(uuid())\n  description String\n  amount      Float\n  date        DateTime @default(now())\n  category    String?\n  user        User     @relation(fields: [userId], references: [id])\n  userId      String\n}\n",
-  "inlineSchemaHash": "78d294838bbd35a6bead822292f2d09db5cc48cc748b55b6182f8a9e126aebd3",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider      = \"prisma-client-js\"\n  output        = \"../app/generated/prisma\"\n  binaryTargets = [\"native\", \"rhel-openssl-3.0.x\"]\n}\n\ndatasource db {\n  provider  = \"postgresql\"\n  url       = env(\"DATABASE_URL\")\n  directUrl = env(\"DIRECT_URL\")\n}\n\nmodel User {\n  id           String        @id @default(uuid())\n  email        String        @unique\n  password     String        @db.VarChar(100)\n  name         String?\n  transactions Transaction[]\n  createdAt    DateTime      @default(now())\n}\n\nmodel Transaction {\n  id          String   @id @default(uuid())\n  description String\n  amount      Float\n  date        DateTime @default(now())\n  category    String?\n  user        User     @relation(fields: [userId], references: [id])\n  userId      String\n}\n",
+  "inlineSchemaHash": "e87d695ac009969415a6808268e377f1e3134890792971844fbb01462f207e8e",
   "copyEngine": true
 }
 
@@ -219,6 +224,10 @@ Object.assign(exports, Prisma)
 // file annotations for bundling tools to include these files
 path.join(__dirname, "query_engine-windows.dll.node");
 path.join(process.cwd(), "app/generated/prisma/query_engine-windows.dll.node")
+
+// file annotations for bundling tools to include these files
+path.join(__dirname, "libquery_engine-rhel-openssl-3.0.x.so.node");
+path.join(process.cwd(), "app/generated/prisma/libquery_engine-rhel-openssl-3.0.x.so.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
 path.join(process.cwd(), "app/generated/prisma/schema.prisma")
