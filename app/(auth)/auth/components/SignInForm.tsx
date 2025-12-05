@@ -22,8 +22,8 @@ export default function SignInForm() {
     handleSubmit,
   } = useForm({
     defaultValues: {
-      email: '',
-      password: '',
+      email: 'johndoe@mail.com',
+      password: 'P@ssw0rd',
     },
     resolver: zodResolver(signInSchema),
     mode: 'onTouched',
@@ -66,9 +66,9 @@ export default function SignInForm() {
               onClick={() => setShowPassword(!showPassword)}
             >
               {showPassword ? (
-                <RiEyeCloseLine size={20} />
-              ) : (
                 <RiEyeLine size={20} />
+              ) : (
+                <RiEyeCloseLine size={20} />
               )}
             </button>
           }

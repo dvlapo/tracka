@@ -86,9 +86,9 @@ export default function SignUpForm({
               onClick={() => setShowPassword(!showPassword)}
             >
               {showPassword ? (
-                <RiEyeCloseLine size={20} />
-              ) : (
                 <RiEyeLine size={20} />
+              ) : (
+                <RiEyeCloseLine size={20} />
               )}
             </button>
           }
@@ -109,9 +109,9 @@ export default function SignUpForm({
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
             >
               {showConfirmPassword ? (
-                <RiEyeCloseLine size={20} />
-              ) : (
                 <RiEyeLine size={20} />
+              ) : (
+                <RiEyeCloseLine size={20} />
               )}
             </button>
           }

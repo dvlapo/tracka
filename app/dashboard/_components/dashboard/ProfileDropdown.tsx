@@ -1,6 +1,7 @@
 import {Button} from '@/app/components/ui/Button';
 import {useUser} from '@/app/hooks/auth/useUser';
 import useClickOutside from '@/app/hooks/useClickOutside';
+import {useQueryClient} from '@tanstack/react-query';
 import {deleteCookie} from 'cookies-next';
 import {AnimatePresence, motion} from 'motion/react';
 import {useRouter} from 'next/navigation';
@@ -12,11 +13,13 @@ export default function ProfileDropdown() {
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const {data: user} = useUser();
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const handleLogout = () => {
     deleteCookie('tracka-user');
     deleteCookie('tracka-token');
     router.replace('/auth');
+    queryClient.invalidateQueries();
   };
 
   useClickOutside(dropdownRef, () => setShowProfileDropdown(false));

@@ -5,6 +5,7 @@ import {useState} from 'react';
 import {FaChartSimple} from 'react-icons/fa6';
 import SignInForm from './components/SignInForm';
 import SignUpForm from './components/SignUpForm';
+import useDarkMode from '@/app/hooks/useDarkMode';
 
 const TABS: Tab[] = [
   {
@@ -17,7 +18,7 @@ const TABS: Tab[] = [
 
 export default function AuthPage() {
   const [activeTab, setActiveTab] = useState<string>(TABS[0].name);
-
+  useDarkMode();
   return (
     <div className="my-[15vh] w-[min(90%,450px)] mx-auto">
       <h1 className="flex justify-center items-center mb-3 gap-2 text-2xl">
@@ -45,7 +46,7 @@ export default function AuthPage() {
           </motion.span>
         )}
       </p>
-      <section className="bg-background dark:bg-foreground px-4 py-6 border-[0.5px] border-gray-300 rounded-lg ">
+      <section className="squircle bg-background dark:bg-foreground px-4 py-6 inset-shadow-2xs shadow-lg rounded-lg">
         <TabNav tabs={TABS} activeTab={activeTab} setActiveTab={setActiveTab} />
 
         {activeTab === 'Sign In' && <SignInForm />}
