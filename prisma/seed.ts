@@ -6,6 +6,7 @@ const userData: Prisma.UserCreateInput[] = [
   {
     name: 'Alice',
     email: 'alice@prisma.io',
+    password: '',
     transactions: {
       create: [
         {
@@ -18,32 +19,16 @@ const userData: Prisma.UserCreateInput[] = [
         },
       ],
     },
-    categories: {
-      create: [
-        {
-          name: 'Income',
-        },
-        {
-          name: 'Expenses',
-        },
-      ],
-    },
   },
   {
     name: 'Bob',
     email: 'bob@prisma.io',
+    password: '',
     transactions: {
       create: [
         {
           amount: 50,
           description: 'Gift',
-        },
-      ],
-    },
-    categories: {
-      create: [
-        {
-          name: 'Gifts',
         },
       ],
     },
