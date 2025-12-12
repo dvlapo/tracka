@@ -97,6 +97,7 @@ export default function AddExpenseForm({
             label="Amount"
             type="number"
             placeholder="0.00"
+            inputMode="numeric"
             {...register('amount', {valueAsNumber: true})}
             error={errors.amount?.message?.toString()}
           />
