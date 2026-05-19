@@ -22,8 +22,8 @@ export default function SignInForm() {
     handleSubmit,
   } = useForm({
     defaultValues: {
-      email: 'johndoe@mail.com',
-      password: 'P@ssw0rd',
+      email: 'johndoe@gmail.com',
+      password: 'secret',
     },
     resolver: zodResolver(signInSchema),
     mode: 'onTouched',

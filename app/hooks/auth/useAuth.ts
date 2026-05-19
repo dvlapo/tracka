@@ -1,3 +1,4 @@
+import {API_BASE_URL} from '@/app/config/api';
 import {useMutation} from '@tanstack/react-query';
 import {setCookie} from 'cookies-next';
 
@@ -7,7 +8,7 @@ interface SignInPayload {
 }
 
 interface SignUpPayload {
-  name: string;
+  username: string;
   email: string;
   password: string;
 }
@@ -16,7 +17,7 @@ export const useAuth = () => {
   const signInMutation = useMutation({
     mutationFn: async (payload: SignInPayload) => {
       try {
-        const res = await fetch('/api/auth/sign-in', {
+        const res = await fetch(`${API_BASE_URL}/auth/signin`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -30,9 +31,11 @@ export const useAuth = () => {
           throw new Error(data.error || 'Sign-in failed');
         }
 
-        setCookie('tracka-token', data.data.token);
-        const user = data.data.user;
-        setCookie('tracka-user', JSON.stringify(user), {maxAge: 60 * 60 * 24});
+        setCookie('tracka-token', data.token.access_token);
+        const user = data.data;
+        setCookie('tracka-user', JSON.stringify(user), {
+          maxAge: 60 * 60 * 24,
+        });
 
         return data;
       } catch (error: any) {
@@ -46,7 +49,7 @@ export const useAuth = () => {
   const signUpMutation = useMutation({
     mutationFn: async (payload: SignUpPayload) => {
       try {
-        const res = await fetch('/api/auth/register', {
+        const res = await fetch(`${API_BASE_URL}/auth/signup`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

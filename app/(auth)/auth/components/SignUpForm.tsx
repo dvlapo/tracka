@@ -27,7 +27,7 @@ export default function SignUpForm({
     reset: resetForm,
   } = useForm({
     defaultValues: {
-      name: '',
+      username: '',
       email: '',
       password: '',
     },
@@ -35,7 +35,11 @@ export default function SignUpForm({
     mode: 'onTouched',
   });
 
-  const onSubmit = (data: {name: string; email: string; password: string}) => {
+  const onSubmit = (data: {
+    username: string;
+    email: string;
+    password: string;
+  }) => {
     signUpMutation.mutate(data, {
       onSuccess() {
         toast.success(
@@ -54,11 +58,11 @@ export default function SignUpForm({
     <form onSubmit={handleSubmit(onSubmit)} className="mt-4">
       <div className="mb-4">
         <FormInput
-          label="Name"
-          placeholder="Enter your name"
+          label="Username"
+          placeholder="Enter your username"
           leftIcon={<MdOutlinePerson size={20} />}
-          {...register('name')}
-          error={errors.name?.message?.toString()}
+          {...register('username')}
+          error={errors.username?.message?.toString()}
         />
       </div>
 

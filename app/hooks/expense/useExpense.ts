@@ -1,5 +1,7 @@
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {useUser} from '../auth/useUser';
+import {API_BASE_URL} from '@/app/config/api';
+import {getCookie} from 'cookies-next';
 
 export interface AddExpensePayload {
   amount: number | null;
@@ -27,12 +29,19 @@ export const useExpense = () => {
   const queryClient = useQueryClient();
   const {data: user} = useUser();
   const userId = user?.id;
+  const token = getCookie('tracka-token');
 
   const getAllExpensesQuery = useQuery({
     queryKey: ['all-expenses', userId],
     queryFn: async () => {
       try {
-        const res = await fetch(`/api/expenses?userId=${userId}`);
+        const res = await fetch(`${API_BASE_URL}/transactions`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         if (!res.ok) {
           const errorText = await res.text();
@@ -52,10 +61,11 @@ export const useExpense = () => {
   const addExpenseMutation = useMutation({
     mutationFn: async (payload: AddExpensePayload) => {
       try {
-        const res = await fetch('/api/expenses/add', {
+        const res = await fetch(`${API_BASE_URL}/transactions`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(payload),
         });
@@ -78,10 +88,11 @@ export const useExpense = () => {
   const deleteExpenseMutation = useMutation({
     mutationFn: async (id: string) => {
       try {
-        const res = await fetch(`/api/expenses/delete?transactionId=${id}`, {
+        const res = await fetch(`${API_BASE_URL}/transactions/${id}`, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
           },
         });
 

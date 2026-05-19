@@ -1,5 +1,7 @@
 import {useQuery} from '@tanstack/react-query';
 import {useUser} from '../auth/useUser';
+import {API_BASE_URL} from '@/app/config/api';
+import {getCookie} from 'cookies-next/client';
 
 export type Spending = {category: string; total: number; percentage: number};
 interface Analytics {
@@ -13,12 +15,19 @@ interface Analytics {
 export const useDashboardAnalytics = () => {
   const {data: user} = useUser();
   const userId = user?.id;
+  const token = getCookie('tracka-token');
 
   const getDashboardAnalyticsQuery = useQuery({
     queryKey: ['dashboard-analytics', userId],
     queryFn: async () => {
       try {
-        const res = await fetch(`/api/analytics?userId=${userId}`);
+        const res = await fetch(`${API_BASE_URL}/analytics`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         if (!res.ok) {
           const errorText = await res.text();
