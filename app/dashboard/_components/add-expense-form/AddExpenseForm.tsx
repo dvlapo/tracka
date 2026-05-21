@@ -67,7 +67,7 @@ export default function AddExpenseForm({
       category: CATEGORY_OPTIONS[0].value,
       date: new Date().toISOString().split('T')[0],
       description: '',
-      userId: user.id,
+      userId: user?.id,
     },
     resolver: zodResolver(addExpenseSchema),
   });
