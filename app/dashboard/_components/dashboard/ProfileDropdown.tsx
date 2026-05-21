@@ -31,7 +31,7 @@ export default function ProfileDropdown() {
         onClick={() => setShowProfileDropdown(!showProfileDropdown)}
         className="grid place-content-center w-4 h-4 p-4 aspect-square rounded-full bg-gray-300 text-foreground capitalize cursor-pointer"
       >
-        {user?.name?.charAt(0)}
+        {user?.username?.charAt(0)}
       </button>
 
       <AnimatePresence>
@@ -57,7 +57,9 @@ export default function ProfileDropdown() {
             }}
             className="squircle border-2 border-gray-300 dark:border-gray-500 rounded-lg w-fit p-3 absolute top-full right-0 mt-2 z-50 bg-background text-foreground dark:bg-foreground dark:text-background"
           >
-            <p className="text-sm text-center font-semibold">{user?.name}</p>
+            <p className="text-sm text-center font-semibold">
+              {user?.username}
+            </p>
             <small className="block my-3">{user?.email}</small>
 
             <Button
